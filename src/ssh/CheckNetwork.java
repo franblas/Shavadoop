@@ -10,10 +10,10 @@ import utils.Configuration;
 public class CheckNetwork {
 	
 	/**
-	 * 
-	 * @param subnet
-	 * @param nbhosts
-	 * @return
+	 * Check all the machines with the ssh port opened on a subnet
+	 * @param subnet The subnet to test
+	 * @param nbhosts The number of hosts to get on the list
+	 * @return a list of all the machines available on the subnet network
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
@@ -39,10 +39,10 @@ public class CheckNetwork {
 	
 	/**
 	 * Check if port is open on host
-	 * @param host
-	 * @param port
-	 * @param timeout
-	 * @return
+	 * @param host The host to connect
+	 * @param port The port to test
+	 * @param timeout The timeout for the test 
+	 * @return true if the port is open on the, else false
 	 */
 	public boolean checkHost(String host, int port, int timeout){
 		boolean res = false;

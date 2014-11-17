@@ -16,9 +16,9 @@ public class FilesUtils {
 	
 	/**
 	 * Write in a file
-	 * @param filepath
-	 * @param content
-	 * @param overwrite (if false rewrite the whole document, if true begin to write at the end of the document)
+	 * @param filepath The file to write
+	 * @param content The content to write
+	 * @param overwrite if false rewrite the whole document, if true begin to write at the end of the document
 	 */
 	public void writeFile(String filepath,String content,boolean overwrite){
 		try {
@@ -45,8 +45,8 @@ public class FilesUtils {
 	
 	/**
 	 * Read a file
-	 * @param filepath
-	 * @return
+	 * @param filepath The file to read
+	 * @return a string with all the lines read of the file
 	 * @throws IOException
 	 */
 	public String readFile(String filepath) throws IOException{

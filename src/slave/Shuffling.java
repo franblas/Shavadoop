@@ -23,8 +23,8 @@ public class Shuffling extends Thread{
 
 	/**
 	 * Suffling Constructor
-	 * @param line
-	 * @param nameMachine
+	 * @param line 
+	 * @param nameMachine 
 	 * @param runNb
 	 * @param runUmNb
 	 */
@@ -50,11 +50,11 @@ public class Shuffling extends Thread{
 	
 	/**
 	 * Compile and execute java file with SSH
-	 * @param shx
-	 * @param ip
-	 * @param com
+	 * @param shx The file to execute
+	 * @param ip The host to connect
+	 * @param com The command to launch
 	 */
-	public void execShuffling(String shx, String ip, String com){
+	public synchronized void execShuffling(String shx, String ip, String com){
 		String mod = "chmod 777 "+new Configuration().slavePath+shx+".java;";
 		String compile = "javac "+new Configuration().slavePath+shx+".java;";
 		String exec = "java -classpath "+new Configuration().slavePath+" "+shx+";";
@@ -74,7 +74,7 @@ public class Shuffling extends Thread{
 	 * @return
 	 * @throws IOException
 	 */
-	public String createExecJava(String word, String ip, int nb, int nbum) throws IOException{	
+	public synchronized String createExecJava(String word, String ip, int nb, int nbum) throws IOException{	
 		String test = addEcho("src/slave/SHx.java",nb);
 		test = test.replace("ipMaster = \\\"\\\"", "ipMaster = \\\""+ip+"\\\"");
 		test = test.replace("word = \\\"\\\"", "word = \\\""+word+"\\\"");

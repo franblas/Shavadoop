@@ -30,11 +30,11 @@ public class CommandSSH {
 	
 	/**
 	 * Execute SSH command and return output
-	 * @param username
-	 * @param host
-	 * @param key
-	 * @param commandssh
-	 * @return
+	 * @param username The ssh user
+	 * @param host The host to connect
+	 * @param key The ssh key
+	 * @param commandssh The command to launch
+	 * @return the output of the command
 	 */
 	public String outputCommandSSH(String username, String host, String key, String commandssh){
 		String res = "";

@@ -32,10 +32,10 @@ public class Merging extends Thread{
 	
 	/**
 	 * Write the final result into a file
-	 * @param rex
-	 * @param ip
+	 * @param rex The file to execute
+	 * @param ip The host to connect
 	 */
-	public void execMerging(String rex, String ip){
+	public synchronized void execMerging(String rex, String ip){
 		String command = "cat "+new Configuration().slavePath+rex+" >> output";
 		String top = new CommandSSH().outputCommandSSH(new Configuration().sshUser, ip, new Configuration().sshKey, command);
 		if(new Configuration().Debug){

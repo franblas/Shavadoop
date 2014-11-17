@@ -33,7 +33,7 @@ public class Master {
 	 */
 	public void cleanFolder(String host){
 		Configuration conf = new Configuration();
-		new CommandSSH().outputCommandSSH(conf.sshUser, host, conf.sshKey, "rm -r "+conf.slavePath+"*");
+		new CommandSSH().outputCommandSSH(conf.sshUser, host, conf.sshKey, "rm -r -f "+conf.slavePath+"*");
 		if(new Configuration().Debug){
 			System.out.println("Folder "+conf.slavePath+" has been cleaned");
 		}

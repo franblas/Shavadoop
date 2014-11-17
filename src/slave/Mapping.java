@@ -59,7 +59,7 @@ public class Mapping extends Thread{
 	 * @param ip
 	 * @param com
 	 */
-	public void execMapping(String umx, String ip, String com, Master master){
+	public synchronized void execMapping(String umx, String ip, String com, Master master){
 		String mod = "chmod 777 "+new Configuration().slavePath+umx+".java;";
 		String compile = "javac "+new Configuration().slavePath+umx+".java;";
 		String exec = "java -classpath "+new Configuration().slavePath+" "+umx+";";
@@ -82,7 +82,7 @@ public class Mapping extends Thread{
 	 * @return
 	 * @throws IOException
 	 */
-	public String createExecJava(String line, String ip, int nb) throws IOException{	
+	public synchronized String createExecJava(String line, String ip, int nb) throws IOException{	
 		String test = addEcho("src/slave/UMx.java",nb);
 		test = test.replace("ipMaster = \\\"\\\"", "ipMaster = \\\""+ip+"\\\"");
 		test = test.replace("line = \\\"\\\"", "line = \\\""+line+"\\\"");

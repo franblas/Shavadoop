@@ -45,7 +45,7 @@ public class SHx extends Thread{
 	 * Shuffling method
 	 * @throws IOException
 	 */
-	public void shufflingShava() throws IOException{
+	public synchronized void shufflingShava() throws IOException{
 		String res = "";
 		writeFile(slavePath+"SH"+nb,"",false);
 		for(int ii=0;ii<nbum;ii++){
@@ -63,9 +63,9 @@ public class SHx extends Thread{
 	
 	/**
 	 * Write in a file
-	 * @param filepath
-	 * @param content
-	 * @param overwrite
+	 * @param filepath The file to write
+	 * @param content The content to write
+	 * @param overwrite if false rewrite the whole document, if true begin to write at the end of the document
 	 */
 	public void writeFile(String filepath,String content,boolean overwrite){
 		try { 
@@ -90,8 +90,8 @@ public class SHx extends Thread{
 	
 	/**
 	 * Read a file
-	 * @param filepath
-	 * @return
+	 * @param filepath The file to read
+	 * @return the whole content of the file
 	 * @throws IOException
 	 */
 	public ArrayList<String> readFile(String filepath) throws IOException{

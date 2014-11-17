@@ -40,10 +40,10 @@ public class UnikWords extends Thread{
 	
 	/**
 	 * Compile and execute java file with SSH
-	 * @param ip
-	 * @param com
+	 * @param ip The host to connect
+	 * @param com The command to launch
 	 */
-	public void execUnikWords(String ip, String com){
+	public synchronized void execUnikWords(String ip, String com){
 		String mod = "chmod 777 "+new Configuration().slavePath+"UWx.java;";
 		String compile = "javac "+new Configuration().slavePath+"UWx.java;";
 		String exec = "java -classpath "+new Configuration().slavePath+" UWx;";
@@ -57,10 +57,10 @@ public class UnikWords extends Thread{
 	
 	/**
 	 * Create java file to execute
-	 * @return
+	 * @return the command to execute
 	 * @throws IOException
 	 */
-	public String createExecJava() throws IOException{	
+	public synchronized String createExecJava() throws IOException{	
 		String test = addEcho("src/slave/UWx.java");
 		test = test.replace("slavePath = \\\"\\\"", "slavePath = \\\""+new Configuration().slavePath+"\\\"");
 		//System.out.println(test);
@@ -69,8 +69,8 @@ public class UnikWords extends Thread{
 	
 	/**
 	 * Parse 'echo' and ';' for the ssh command 
-	 * @param filepath
-	 * @return
+	 * @param filepath The file to parse
+	 * @return the whole command with echo parsed
 	 * @throws IOException
 	 */
 	public String addEcho(String filepath) throws IOException{

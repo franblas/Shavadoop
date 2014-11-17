@@ -43,7 +43,7 @@ public class REx extends Thread{
 	 * Reducing method
 	 * @throws IOException
 	 */
-	public void reducingShava() throws IOException{
+	public synchronized void reducingShava() throws IOException{
 		ArrayList<String> lines = readFile(slavePath+"SH"+nb);
 		writeFile(slavePath+"RE"+nb,"",false);
 		String word = lines.get(0).split(",")[0];
@@ -53,9 +53,9 @@ public class REx extends Thread{
 	
 	/**
 	 * Write in a file
-	 * @param filepath
-	 * @param content
-	 * @param overwrite
+	 * @param filepath The file to write
+	 * @param content The content to write
+	 * @param overwrite if false rewrite the whole document, if true begin to write at the end of the document
 	 */
 	public void writeFile(String filepath,String content,boolean overwrite){
 		try { 
@@ -78,6 +78,12 @@ public class REx extends Thread{
 		}
 	}
 	
+	/**
+	 * Read a file
+	 * @param filepath The file to read
+	 * @return the whole content of the file
+	 * @throws IOException
+	 */
 	public ArrayList<String> readFile(String filepath) throws IOException{
 		ArrayList<String> res = new ArrayList<String>();
 	    BufferedReader br = new BufferedReader(new FileReader(filepath));

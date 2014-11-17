@@ -15,10 +15,10 @@ public class Configuration {
 	/**
 	 * SSH configuration
 	 */
-	final public String sshKey = "id_dsa_loc";
-	final public String sshUser = "paco";
-	final public String sshSubnet = "10.120.150";
-	final public int sshNumberOfHosts = 1;
+	final public String sshKey = "id_dsa";
+	final public String sshUser = "fblas";
+	final public String sshSubnet = "137.194.35";
+	final public int sshNumberOfHosts = 10;
 	
 	/**
 	 * Debug configuration

@@ -48,11 +48,11 @@ public class UMx extends Thread{
 	
 	/**
 	 * Get list of unique words for a file
-	 * @param filename
-	 * @return
+	 * @param filename The file to test
+	 * @return the list of unique words
 	 * @throws IOException
 	 */
-	public ArrayList<String> getUniqueWords(String filename) throws IOException{
+	public synchronized ArrayList<String> getUniqueWords(String filename) throws IOException{
 		ArrayList<String> words = readFile(filename);	
 		ArrayList<String> wordsunique = new ArrayList<String>();
 		for (String word : words) {
@@ -68,7 +68,7 @@ public class UMx extends Thread{
 	/**
 	 * Mapping method
 	 */
-	public void mappingShava(){
+	public synchronized void mappingShava(){
 		String[] wo = line.split(" ");
 		String res = "";
 		writeFile(slavePath+"UM"+nb,"",false);
@@ -81,11 +81,11 @@ public class UMx extends Thread{
 
 	/**
 	 * Write in a file
-	 * @param filepath
-	 * @param content
-	 * @param overwrite
+	 * @param filepath The file to write
+	 * @param content The content to write
+	 * @param overwrite if false rewrite the whole document, if true begin to write at the end of the document
 	 */
-	public void writeFile(String filepath,String content,boolean overwrite){
+	public synchronized void writeFile(String filepath,String content,boolean overwrite){
 		try { 
 			File file = new File(filepath);
 
@@ -107,9 +107,9 @@ public class UMx extends Thread{
 	}
 	
 	/**
-	 * Read in a file
-	 * @param filepath
-	 * @return
+	 * Read a file
+	 * @param filepath The file to read
+	 * @return the whole content of the file
 	 * @throws IOException
 	 */
 	public ArrayList<String> readFile(String filepath) throws IOException{

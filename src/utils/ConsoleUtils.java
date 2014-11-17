@@ -13,8 +13,8 @@ public class ConsoleUtils {
 
 	/**
 	 * Get the output of a dos command
-	 * @param command
-	 * @return
+	 * @param command The command to launch
+	 * @return the output of the command
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
@@ -32,8 +32,8 @@ public class ConsoleUtils {
 	
 	/**
 	 * Get the output of a bash command
-	 * @param command
-	 * @return
+	 * @param command The command to launch
+	 * @return the output of the command
 	 */
 	public String outputBash(String command){
 		String result = null;

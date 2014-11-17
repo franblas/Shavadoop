@@ -15,13 +15,18 @@ import utils.Configuration;
 import utils.FilesUtils;
 import utils.SystemUtils;
 
+/**
+ * 
+ * @author Paco
+ *
+ */
 public class MapReduce {
 	
 	public long durationTime = 0; //in milliseconds
 
 	/**
 	 * Execute the map reduce
-	 * @param filename
+	 * @param filename The file to mapreduce
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
@@ -128,13 +133,11 @@ public class MapReduce {
 	}
 
 	/**
-	 * 
+	 * Get the duration time of the MapReduce
 	 * @return
 	 */
 	public long getDurationTime() {
 		return durationTime;
 	}
 	
-	
-
 }//end of class

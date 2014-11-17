@@ -47,7 +47,7 @@ public class Reducing extends Thread{
 	 * @param ip
 	 * @param com
 	 */
-	public void execReducing(String rex, String ip, String com){
+	public synchronized void execReducing(String rex, String ip, String com){
 		String mod = "chmod 777 "+new Configuration().slavePath+rex+".java;";
 		String compile = "javac "+new Configuration().slavePath+rex+".java;";
 		String exec = "java -classpath "+new Configuration().slavePath+" "+rex+";";
@@ -65,7 +65,7 @@ public class Reducing extends Thread{
 	 * @return
 	 * @throws IOException
 	 */
-	public String createExecJava(String ip, int nb) throws IOException{	
+	public synchronized String createExecJava(String ip, int nb) throws IOException{	
 		String test = addEcho("src/slave/REx.java",nb);
 		test = test.replace("ipMaster = \\\"\\\"", "ipMaster = \\\""+ip+"\\\"");
 		test = test.replace("nb = 0", "nb = "+nb+"");

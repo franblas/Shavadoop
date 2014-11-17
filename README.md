@@ -1,4 +1,4 @@
 Shavadoop
 =========
 
-My own implementation of MapReduce
+An implementation of MapReduce

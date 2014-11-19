@@ -13,39 +13,28 @@ import java.util.ArrayList;
  * @author Paco
  *
  */
-public class SHx extends Thread{
+public class SHx {
 
 	//public String ipMaster = "";
-	public String word = "";
-	public int nb = 0;
-	public int nbum = 0;
-	public String slavePath = "";
+	public static String word = "";
+	public static int nb = 0;
+	public static int nbum = 0;
+	public static String slavePath = "";
 	
 	/**
 	 * Main
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String[] args){
-		SHx t = new SHx();
-	    t.start();
-	}
-	
-	/**
-	 * SHx Runnable
-	 */
-	public void run(){
-		try {
-			shufflingShava();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public static void main(String[] args) throws IOException{
+		shufflingShava();
 	}
 	
 	/**
 	 * Shuffling method
 	 * @throws IOException
 	 */
-	public synchronized void shufflingShava() throws IOException{
+	public static void shufflingShava() throws IOException{
 		String res = "";
 		writeFile(slavePath+"SH"+nb,"",false);
 		for(int ii=0;ii<nbum;ii++){
@@ -67,7 +56,7 @@ public class SHx extends Thread{
 	 * @param content The content to write
 	 * @param overwrite if false rewrite the whole document, if true begin to write at the end of the document
 	 */
-	public void writeFile(String filepath,String content,boolean overwrite){
+	public static void writeFile(String filepath,String content,boolean overwrite){
 		try { 
 			File file = new File(filepath);
 
@@ -94,7 +83,7 @@ public class SHx extends Thread{
 	 * @return the whole content of the file
 	 * @throws IOException
 	 */
-	public ArrayList<String> readFile(String filepath) throws IOException{
+	public static ArrayList<String> readFile(String filepath) throws IOException{
 		ArrayList<String> res = new ArrayList<String>();
 	    BufferedReader br = new BufferedReader(new FileReader(filepath));
 	    try {

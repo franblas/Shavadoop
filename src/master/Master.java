@@ -38,6 +38,20 @@ public class Master {
 			System.out.println("Folder "+conf.slavePath+" has been cleaned");
 		}
 	}
+	
+	/**
+	 * Merge all files into one
+	 * @param host
+	 * @param files
+	 * @param outmerge
+	 */
+	public void multipleMerge(String host, String files, String outmerge){
+		Configuration conf = new Configuration();
+		new CommandSSH().outputCommandSSH(conf.sshUser, host, conf.sshKey, "cat "+files+" > "+conf.slavePath+outmerge);
+		if(new Configuration().Debug){
+			System.out.println("All files has been merged into "+outmerge);
+		}
+	}
 
 	/**
 	 * 

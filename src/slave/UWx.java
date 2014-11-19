@@ -14,23 +14,15 @@ import java.util.HashSet;
  * @author Paco
  *
  */
-public class UWx extends Thread{
+public class UWx {
 	
-	public String slavePath = "";
+	public static String slavePath = "";
 
 	/**
 	 * Main
 	 * @param args
 	 */
 	public static void main(String[] args){
-		UWx t = new UWx();
-	    t.start();
-	}
-	
-	/**
-	 * UWx runnable
-	 */
-	public void run(){
 		ArrayList<String> un = new ArrayList<String>();
 		try {
 			un = getUniqueWords(slavePath+"unik");
@@ -52,7 +44,7 @@ public class UWx extends Thread{
 	 * @return the list of unique words
 	 * @throws IOException
 	 */
-	public synchronized ArrayList<String> getUniqueWords(String filename) throws IOException{
+	public static ArrayList<String> getUniqueWords(String filename) throws IOException{
 		ArrayList<String> words = readFile(filename);	
 		ArrayList<String> wordsunique = new ArrayList<String>();
 		for (String word : words) {
@@ -71,7 +63,7 @@ public class UWx extends Thread{
 	 * @param content The content to write
 	 * @param overwrite if false rewrite the whole document, if true begin to write at the end of the document
 	 */
-	public synchronized void writeFile(String filepath,String content,boolean overwrite){
+	public static void writeFile(String filepath,String content,boolean overwrite){
 		try { 
 			File file = new File(filepath);
 
@@ -98,7 +90,7 @@ public class UWx extends Thread{
 	 * @return the whole content of the file
 	 * @throws IOException
 	 */
-	public ArrayList<String> readFile(String filepath) throws IOException{
+	public static ArrayList<String> readFile(String filepath) throws IOException{
 		ArrayList<String> res = new ArrayList<String>();
 	    BufferedReader br = new BufferedReader(new FileReader(filepath));
 	    try {

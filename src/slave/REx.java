@@ -13,37 +13,26 @@ import java.util.ArrayList;
  * @author Paco
  *
  */
-public class REx extends Thread{
+public class REx {
 
 	//public String ipMaster = "";
-	public int nb = 0;
-	public String slavePath = "";
+	public static int nb = 0;
+	public static String slavePath = "";
 	
 	/**
 	 * Main
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String[] args){
-		REx t = new REx();
-	    t.start();
-	}
-	
-	/**
-	 * REx Runnable
-	 */
-	public void run(){
-		try {
-			reducingShava();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public static void main(String[] args) throws IOException{
+		reducingShava();
 	}
 	
 	/**
 	 * Reducing method
 	 * @throws IOException
 	 */
-	public synchronized void reducingShava() throws IOException{
+	public static void reducingShava() throws IOException{
 		ArrayList<String> lines = readFile(slavePath+"SH"+nb);
 		writeFile(slavePath+"RE"+nb,"",false);
 		String word = lines.get(0).split(",")[0];
@@ -57,7 +46,7 @@ public class REx extends Thread{
 	 * @param content The content to write
 	 * @param overwrite if false rewrite the whole document, if true begin to write at the end of the document
 	 */
-	public void writeFile(String filepath,String content,boolean overwrite){
+	public static void writeFile(String filepath,String content,boolean overwrite){
 		try { 
 			File file = new File(filepath);
 
@@ -84,7 +73,7 @@ public class REx extends Thread{
 	 * @return the whole content of the file
 	 * @throws IOException
 	 */
-	public ArrayList<String> readFile(String filepath) throws IOException{
+	public static ArrayList<String> readFile(String filepath) throws IOException{
 		ArrayList<String> res = new ArrayList<String>();
 	    BufferedReader br = new BufferedReader(new FileReader(filepath));
 	    try {

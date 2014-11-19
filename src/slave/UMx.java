@@ -14,26 +14,18 @@ import java.util.HashSet;
  * @author Paco
  *
  */
-public class UMx extends Thread{
+public class UMx {
 	
 	//public String ipMaster = "";
-	public String line = "";
-	public int nb = 0;
-	public String slavePath = "";
+	public static String line = "";
+	public static int nb = 0;
+	public static String slavePath = "";
 
 	/**
 	 * Main
 	 * @param args
 	 */
 	public static void main(String[] args){
-		UMx t = new UMx();
-	    t.start();
-	}
-	
-	/**
-	 * UMx Runnable
-	 */
-	public void run(){
 		mappingShava();
 		ArrayList<String> unik = new ArrayList<String>();
 		try {
@@ -42,9 +34,9 @@ public class UMx extends Thread{
 			e.printStackTrace();
 		}
 		for(int i=0;i<unik.size();i++){
-			writeFile(slavePath+"unik",unik.get(i),true);
+			writeFile(slavePath+"unik"+nb,unik.get(i),true);
 		}
-	}   
+	}  
 	
 	/**
 	 * Get list of unique words for a file
@@ -52,7 +44,7 @@ public class UMx extends Thread{
 	 * @return the list of unique words
 	 * @throws IOException
 	 */
-	public synchronized ArrayList<String> getUniqueWords(String filename) throws IOException{
+	public static ArrayList<String> getUniqueWords(String filename) throws IOException{
 		ArrayList<String> words = readFile(filename);	
 		ArrayList<String> wordsunique = new ArrayList<String>();
 		for (String word : words) {
@@ -68,7 +60,7 @@ public class UMx extends Thread{
 	/**
 	 * Mapping method
 	 */
-	public synchronized void mappingShava(){
+	public static void mappingShava(){
 		String[] wo = line.split(" ");
 		String res = "";
 		writeFile(slavePath+"UM"+nb,"",false);
@@ -85,7 +77,7 @@ public class UMx extends Thread{
 	 * @param content The content to write
 	 * @param overwrite if false rewrite the whole document, if true begin to write at the end of the document
 	 */
-	public synchronized void writeFile(String filepath,String content,boolean overwrite){
+	public static void writeFile(String filepath,String content,boolean overwrite){
 		try { 
 			File file = new File(filepath);
 
@@ -112,7 +104,7 @@ public class UMx extends Thread{
 	 * @return the whole content of the file
 	 * @throws IOException
 	 */
-	public ArrayList<String> readFile(String filepath) throws IOException{
+	public static ArrayList<String> readFile(String filepath) throws IOException{
 		ArrayList<String> res = new ArrayList<String>();
 	    BufferedReader br = new BufferedReader(new FileReader(filepath));
 	    try {

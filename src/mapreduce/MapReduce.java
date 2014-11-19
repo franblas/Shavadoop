@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import master.Master;
 import slave.Mapping;
-import slave.Merging;
 import slave.Reducing;
 import slave.Shuffling;
 import slave.Slave;
@@ -61,6 +60,7 @@ public class MapReduce {
 		System.out.println("-------------------- Map operation ------------------------");
 		
 		//map
+		String unikk = "";
 		int hostnum = 0;
 		for(int i=0;i<lines.length;i++){		
 			if(hostnum > (new Configuration().sshNumberOfHosts)-1){
@@ -70,8 +70,13 @@ public class MapReduce {
 			master.dictionary.put(slave.mapping.getUm(),slave.mapping.getNameMachine());
 			slave.mapping.start();
 			hostnum++;
+			unikk += new Configuration().slavePath+"unik"+i+" ";
 		}
 		slave.mapping.join();
+
+		System.out.println("-------------------- Multiple merge ------------------------");
+		
+		master.multipleMerge(hosts.get(new SystemUtils().randInt(0, (new Configuration().sshNumberOfHosts)-1)), unikk, "unik");
 		
 		System.out.println("-------------------- Sort operation ------------------------");
 		
@@ -101,30 +106,23 @@ public class MapReduce {
 		System.out.println("-------------------- Reduce operation ------------------------");
 		
 		//reduce
+		String red = "";
 		int hostindex2 = 0;
-		for(int j=0;j<unwo.length;j++){
+		for(int k=0;k<unwo.length;k++){
 			if(hostindex2 > (new Configuration().sshNumberOfHosts)-1){
 				hostindex2 = 0;
 			}
-			slave.reducing = new Reducing(hosts.get(hostindex2),j);
+			slave.reducing = new Reducing(hosts.get(hostindex2),k);
 			slave.reducing.start();
 			hostindex2++;
+			red += new Configuration().slavePath+"RE"+k+" ";
 		}
 		slave.reducing.join();
 		
 		System.out.println("-------------------- Merge operation ------------------------");
 		
 		//merge
-		int hostindex3 = 0;
-		for(int k=0;k<unwo.length;k++){
-			if(hostindex3 > (new Configuration().sshNumberOfHosts)-1){
-				hostindex3 = 0;
-			}
-			slave.merging = new Merging(hosts.get(hostindex3),k);
-			slave.merging.start();
-			hostindex3++;
-		}
-		slave.merging.join();
+		master.multipleMerge(hosts.get(new SystemUtils().randInt(0, (new Configuration().sshNumberOfHosts)-1)), red, "output");
 		
 		long endTime = System.nanoTime();
 		durationTime = (endTime - startTime) / 1000000;

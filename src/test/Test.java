@@ -20,7 +20,7 @@ public class Test {
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException{
 		MapReduce mapreduce = new MapReduce();
-		mapreduce.execMapReduce("INPUT.txt");
+		mapreduce.execMapReduce("INPUT2.txt");
 		System.out.println("MapReduce in "+mapreduce.getDurationTime()/1000+" s");
 	}
 

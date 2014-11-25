@@ -18,7 +18,7 @@ public class Configuration {
 	final public String sshKey = "id_dsa_loc";
 	final public String sshUser = "docker";
 	final public String sshSubnet = "10.137.1";
-	final public int sshNumberOfHosts = 1;
+	final public int sshNumberOfHosts = 20;
 	
 	/**
 	 * Debug configuration

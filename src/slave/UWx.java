@@ -32,7 +32,7 @@ public class UWx {
 		String res = "";
 		writeFile(slavePath+"unik","",false);
 		for(int i=0;i<un.size();i++){
-			writeFile(slavePath+"unik",un.get(i),true);
+			writeFile(slavePath+"unikk",un.get(i),true);
 			res += un.get(i)+" ";
 		}
 		System.out.println(res);

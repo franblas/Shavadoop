@@ -61,24 +61,34 @@ public class MapReduce {
 		
 		//map
 		String unikk = "";
-		int correct = 0; //Correction
+		int correct = 1; //Correction
 		if(lines.length>hosts.size()){
-			correct = lines.length/hosts.size();
+			correct = lines.length;
 		}
 		int offset = 0;
 		int counter = 0;
-		while(counter!=correct+1){
+		while(counter<correct){
+			int ii = 0;
 			for(int i=0;i<hosts.size();i++){		
+				if(correct==1 && i==lines.length){
+					break;
+				}
+				if(correct==lines.length && (i+offset)==lines.length){
+					break;
+				}
 				//slave.mapping = new Mapping(i,hosts.get(hostnum),lines[i],master);
 				slave.mapping = new Mapping(i+offset,hosts.get(i),lines[i+offset],master);
 				master.dictionary.put(slave.mapping.getUm(),slave.mapping.getNameMachine());
+				ii++;
 				slave.mapping.start();
 				unikk += new Configuration().slavePath+"unik"+(i+offset)+" ";
 			}
 			slave.mapping.join();
-			offset += hosts.size();
-			counter++;
+			offset =offset+hosts.size();
+			//counter=counter+ii+1;
+			counter=ii+counter;
 		}	
+
 
 		System.out.println("-------------------- Multiple merge ------------------------");
 		
@@ -97,42 +107,62 @@ public class MapReduce {
 		System.out.println("-------------------- Shuffle operation ------------------------");
 		
 		//shuffle
+		correct=1;
 		if(unwo.length>hosts.size()){ //Correction Bis
-			correct = unwo.length/hosts.size();
+			correct = unwo.length;
 		}
 		offset = 0;
 		counter = 0;
-		while(counter!=correct+1){
+		while(counter<correct){
+			int jj = 0;
 			for(int j=0;j<hosts.size();j++){
+				if(correct==1 && j==unwo.length){
+					break;
+				}
+				if(correct==unwo.length && (j+offset)==unwo.length){
+					break;
+				}
 				//slave.shuffling = new Shuffling(unwo[j],hosts.get(hostindex),j,umnb);
 				slave.shuffling = new Shuffling(unwo[j+offset],hosts.get(j),j+offset,umnb);
 				master.dictionary3.put(slave.shuffling.getSh(), slave.shuffling.getNameMachine());
+				jj++;
 				slave.shuffling.start();
 			}
 			slave.shuffling.join();
-			offset += hosts.size();
-			counter++;
+			offset = offset+hosts.size();
+			//counter=jj+counter+1;
+			counter=jj+counter;
 		}
 		
 		System.out.println("-------------------- Reduce operation ------------------------");
 		
 		//reduce
+		correct=1;
 		String red = "";
 		if(unwo.length>hosts.size()){ //Correction Bis
-			correct = unwo.length/hosts.size();
+			correct = unwo.length;
 		}
 		offset = 0;
 		counter = 0;
-		while(counter!=correct+1){
+		while(counter<correct){
+			int kk = 0;
 			for(int k=0;k<hosts.size();k++){
+				if(correct==1 && k==unwo.length){
+					break;
+				}
+				if(correct==unwo.length && (k+offset)==unwo.length){
+					break;
+				}
 				//slave.reducing = new Reducing(hosts.get(hostindex2),k);
 				slave.reducing = new Reducing(hosts.get(k),k+offset);
+				kk++;
 				slave.reducing.start();
 				red += new Configuration().slavePath+"RE"+(k+offset)+" ";
 			}
 			slave.reducing.join();
-			offset += hosts.size();
-			counter++;
+			offset = offset + hosts.size();
+			//counter = counter + kk+1;
+			counter=kk+counter;
 		}
 		
 		System.out.println("-------------------- Merge operation ------------------------");

@@ -69,6 +69,7 @@ public class MapReduce {
 		int counter = 0;
 		while(counter<correct){
 			int ii = 0;
+			ArrayList<slave.Mapping> threadlist1 = new ArrayList<slave.Mapping>();
 			for(int i=0;i<hosts.size();i++){		
 				if(correct==1 && i==lines.length){
 					break;
@@ -78,12 +79,16 @@ public class MapReduce {
 				}
 				//slave.mapping = new Mapping(i,hosts.get(hostnum),lines[i],master);
 				slave.mapping = new Mapping(i+offset,hosts.get(i),lines[i+offset],master);
+				threadlist1.add(slave.mapping);
 				master.dictionary.put(slave.mapping.getUm(),slave.mapping.getNameMachine());
 				ii++;
 				slave.mapping.start();
 				unikk += new Configuration().slavePath+"unik"+(i+offset)+" ";
 			}
-			slave.mapping.join();
+			for(int i=0;i<threadlist1.size();i++){
+				threadlist1.get(i).join();
+				//slave.mapping.join();
+			}	
 			offset =offset+hosts.size();
 			//counter=counter+ii+1;
 			counter=ii+counter;
@@ -115,6 +120,7 @@ public class MapReduce {
 		counter = 0;
 		while(counter<correct){
 			int jj = 0;
+			ArrayList<slave.Shuffling> threadlist2 = new ArrayList<slave.Shuffling>();
 			for(int j=0;j<hosts.size();j++){
 				if(correct==1 && j==unwo.length){
 					break;
@@ -124,11 +130,16 @@ public class MapReduce {
 				}
 				//slave.shuffling = new Shuffling(unwo[j],hosts.get(hostindex),j,umnb);
 				slave.shuffling = new Shuffling(unwo[j+offset],hosts.get(j),j+offset,umnb);
+				threadlist2.add(slave.shuffling);
 				master.dictionary3.put(slave.shuffling.getSh(), slave.shuffling.getNameMachine());
 				jj++;
 				slave.shuffling.start();
 			}
-			slave.shuffling.join();
+			for(int j=0;j<threadlist2.size();j++){
+				//slave.shuffling.join();
+				threadlist2.get(j).join();
+			}
+			
 			offset = offset+hosts.size();
 			//counter=jj+counter+1;
 			counter=jj+counter;
@@ -146,6 +157,7 @@ public class MapReduce {
 		counter = 0;
 		while(counter<correct){
 			int kk = 0;
+			ArrayList<slave.Reducing> threadlist3 = new ArrayList<slave.Reducing>(); 
 			for(int k=0;k<hosts.size();k++){
 				if(correct==1 && k==unwo.length){
 					break;
@@ -155,11 +167,15 @@ public class MapReduce {
 				}
 				//slave.reducing = new Reducing(hosts.get(hostindex2),k);
 				slave.reducing = new Reducing(hosts.get(k),k+offset);
+				threadlist3.add(slave.reducing);
 				kk++;
 				slave.reducing.start();
 				red += new Configuration().slavePath+"RE"+(k+offset)+" ";
 			}
-			slave.reducing.join();
+			for(int k=0;k<threadlist3.size();k++){
+				//slave.reducing.join();
+				threadlist3.get(k).join();
+			}
 			offset = offset + hosts.size();
 			//counter = counter + kk+1;
 			counter=kk+counter;
